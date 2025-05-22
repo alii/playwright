@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 
+declare const globalThis: typeof global & {
+  Bun?: unknown;
+};
+
 export const colors: typeof import('../bundles/utils/node_modules/colors/safe') = require('./utilsBundleImpl').colors;
 export const debug: typeof import('../bundles/utils/node_modules/@types/debug') = require('./utilsBundleImpl').debug;
 export const diff: typeof import('../bundles/utils/node_modules/@types/diff') = require('./utilsBundleImpl').diff;
@@ -30,13 +34,13 @@ export const program: typeof import('../bundles/utils/node_modules/commander').p
 export const progress: typeof import('../bundles/utils/node_modules/@types/progress') = require('./utilsBundleImpl').progress;
 export const SocksProxyAgent: typeof import('../bundles/utils/node_modules/socks-proxy-agent').SocksProxyAgent = require('./utilsBundleImpl').SocksProxyAgent;
 export const yaml: typeof import('../bundles/utils/node_modules/yaml') = require('./utilsBundleImpl').yaml;
-export type { Range as YAMLRange, Scalar as YAMLScalar, YAMLError, YAMLMap, YAMLSeq } from '../bundles/utils/node_modules/yaml';
-export const ws: typeof import('../bundles/utils/node_modules/@types/ws') = require('./utilsBundleImpl').ws;
+export type { WebSocket, EventEmitter as WebSocketEventEmitter, RawData as WebSocketRawData, WebSocketServer } from '../bundles/utils/node_modules/@types/ws';
+export type { Command } from '../bundles/utils/node_modules/commander';
+export type { YAMLError, YAMLMap, Range as YAMLRange, Scalar as YAMLScalar, YAMLSeq } from '../bundles/utils/node_modules/yaml';
+export const ws: typeof import('../bundles/utils/node_modules/@types/ws') = globalThis.Bun ? require('ws') : require('./utilsBundleImpl').ws;
 export const wsServer: typeof import('../bundles/utils/node_modules/@types/ws').WebSocketServer = require('./utilsBundleImpl').wsServer;
 export const wsReceiver = require('./utilsBundleImpl').wsReceiver;
 export const wsSender = require('./utilsBundleImpl').wsSender;
-export type { Command } from '../bundles/utils/node_modules/commander';
-export type { EventEmitter as WebSocketEventEmitter, RawData as WebSocketRawData, WebSocket, WebSocketServer } from '../bundles/utils/node_modules/@types/ws';
 
 export function ms(ms: number): string {
   if (!isFinite(ms))
